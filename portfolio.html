@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faye On Flesh — Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --bg-alt: #121218;
+      --accent: #b71c1c;
+      --accent-soft: #e53935;
+      --text-main: #f5f5f5;
+      --text-muted: #b0b0b0;
+      --border-soft: #2a2a33;
+      --radius: 10px;
+      --max-width: 1100px;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1c1c24 0, #050509 55%);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-soft);
+      background: rgba(5, 5, 9, 0.9);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-link {
+      position: relative;
+      padding-bottom: 0.15rem;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+      transition: width 0.2s ease-out;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-soft);
+    }
+
+    .intro {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Card */
+    .art-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      overflow: hidden;
+      padding: 1rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    /* Hover animation */
+    .art-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+    }
+
+    /* Image */
+    .art-card img {
+      width: 100%;
+      border-radius: var(--radius);
+      margin-bottom: 0.75rem;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    /* Image hover zoom */
+    .art-card:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.15);
+    }
+
+    .art-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.4rem;
+    }
+
+    .art-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* LIGHTBOX */
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      animation: fadeIn 0.3s ease;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: var(--radius);
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      animation: zoomIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.7); }
+      to { transform: scale(1); }
+    }
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 1.25rem 1.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <div class="site-title">Faye On Flesh</div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="portfolio.html" class="nav-link active">Portfolio</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="apprenticeship.html" class="nav-link">Apprenticeship</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Faye On Flesh Portfolio</h1>
+
+    <p class="intro">
+      A curated selection of gothic, blackwork, horror‑inspired and tattoo‑focused artwork.  
+      Click any piece to view it in full size.
+    </p>
+
+    <div class="gallery">
+
+      <div class="art-card" onclick="openLightbox('heart.png')">
+        <img src="images/heart.png">
+        <div class="art-title">Heart & Hand</div>
+        <div class="art-desc">Gothic anatomical illustration with stitched detailing.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('batwoman.jpeg')">
+        <img src="images/batwoman.jpeg">
+        <div class="art-title">Bat Hybrid Portrait</div>
+        <div class="art-desc">Surreal fusion of human portraiture and winged creature.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('horror4.jpeg')">
+        <img src="images/horror4.jpeg">
+        <div class="art-title">Classic Horror Set</div>
+        <div class="art-desc">Four iconic horror figures rendered in bold blackwork.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('devilhead.png')">
+        <img src="images/devilhead.png">
+        <div class="art-title">Devil Headscarf Portrait</div>
+        <div class="art-desc">Vintage‑inspired character design with bold red accents.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('ornamentalskull.jpeg')">
+        <img src="images/ornamentalskull.jpeg">
+        <div class="art-title">Ornamental Skull</div>
+        <div class="art-desc">Highly detailed skull with baroque‑style flourishes.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('cartoonbat.jpeg')">
+        <img src="images/cartoonbat.jpeg">
+        <div class="art-title">Cartoon Bat</div>
+        <div class="art-desc">Vibrant stylised bat with exaggerated features.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('hybridwolf.jpeg')">
+        <img src="images/hybridwolf.jpeg">
+        <div class="art-title">Dual Creature Hybrid</div>
+        <div class="art-desc">Surreal fusion of predator and prey in monochrome shading.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('bride.jpeg')">
+        <img src="images/bride.jpeg">
+        <div class="art-title">Bride Portrait</div>
+        <div class="art-desc">Classic horror‑inspired portrait with gothic props.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('vampire.jpeg')">
+        <img src="images/vampire.jpeg">
+        <div class="art-title">Vampire Illustration</div>
+        <div class="art-desc">Detailed vampire character with dramatic shading.</div>
+      </div>
+
+      <div class="art-card" onclick="openLightbox('elvira.jpeg')">
+        <img src="images/elvira.jpeg">
+        <div class="art-title">Elvira Tribute</div>
+        <div class="art-desc">Bold black‑and‑white tribute piece with gothic lettering.</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="">
+  </div>
+
+  <footer>
+    Portfolio page rebuilt with lightbox + hover animations.
+  </footer>
+
+  <script>
+    function openLightbox(src) {
+      document.getElementById("lightbox-img").src = src;
+      document.getElementById("lightbox").style.display = "flex";
+    }
+
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
