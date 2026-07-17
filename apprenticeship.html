@@ -130,6 +130,25 @@
       margin-bottom: 0.4rem;
     }
 
+    /* CV BUTTON */
+    .cv-button {
+      display: inline-block;
+      padding: 12px 22px;
+      background: var(--accent-soft);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: background 0.25s ease;
+      margin-top: 1rem;
+    }
+
+    .cv-button:hover {
+      background: var(--accent);
+    }
+
+    /* Animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -171,31 +190,31 @@
 
   <div class="section">
     <div class="section-body">
-      I am actively seeking a tattoo apprenticeship where I can develop my skills in a professional studio environment. 
+      I am actively seeking a tattoo apprenticeship where I can develop my skills in a professional studio environment.
     </div>
   </div>
 
   <div class="section">
     <div class="section-body">
-      This page highlights my strongest work, my artistic background, and the qualities I bring to tattooing. 
+      This page highlights my strongest work, my artistic background, and the qualities I bring to tattooing.
     </div>
   </div>
 
   <div class="section">
     <div class="section-body">
-      Tattooing combines everything I value in art: intention, permanence, and connection. 
+      Tattooing combines everything I value in art: intention, permanence, and connection.
     </div>
   </div>
 
   <div class="section">
     <div class="section-body">
-      I’m drawn to the craft because it transforms illustration into something living, personal, and lasting. 
+      I’m drawn to the craft because it transforms illustration into something living, personal, and lasting.
     </div>
   </div>
 
   <div class="section">
     <div class="section-body">
-      I want to learn the technical discipline behind tattooing and bring my gothic, horror‑inspired style into a studio setting. 
+      I want to learn the technical discipline behind tattooing and bring my gothic, horror‑inspired style into a studio setting.
     </div>
   </div>
 
@@ -211,13 +230,42 @@
         <li>Customer service experience and professional communication</li>
         <li>Comfortable working digitally and traditionally</li>
       </ul>
-      
+    </div>
+  </div>
+
+  <!-- CV SECTION -->
+  <div class="section">
+    <div class="section-title">Curriculum Vitae</div>
+    <div class="section-body">
+      Below is my CV, including my work history, certifications, and relevant experience.
+
+      <!-- BUTTON VERSION (Google Docs link example) -->
+      <a href="YOUR_GOOGLE_DOCS_LINK_HERE" target="_blank" class="cv-button">
+        View My CV
+      </a>
+
+      <!-- EMBED VERSION (optional — delete if not needed) -->
+      <!--
+      <iframe 
+        src="YOUR_GOOGLE_DOCS_LINK_HERE/preview"
+        style="width:100%; height:800px; border:none; margin-top:20px;">
+      </iframe>
+      -->
+
+      <!-- DOWNLOAD VERSION (optional — requires cv.docx uploaded to GitHub) -->
+      <!--
+      <a href="cv.docx" class="cv-button" download>
+        Download CV (.docx)
+      </a>
+      -->
     </div>
   </div>
 
 </main>
 
 <footer>
+  © Faye On Flesh — Tattoo & Illustration
+</footer>
 
 </body>
 </html>
