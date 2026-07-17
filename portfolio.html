@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Faye On Flesh — Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg: #050509;
@@ -16,27 +18,21 @@
             --border: #262633;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: radial-gradient(circle at top, #151521 0, #050509 55%);
             color: var(--text);
-            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: "Inter", sans-serif;
             min-height: 100vh;
         }
 
-        /* Layout */
         .page {
             max-width: 1100px;
             margin: 0 auto;
             padding: 32px 20px 48px;
         }
 
-        /* Header / Nav */
         header {
             display: flex;
             justify-content: space-between;
@@ -53,9 +49,7 @@
             font-size: 0.95rem;
         }
 
-        .logo span {
-            color: var(--accent);
-        }
+        .logo span { color: var(--accent); }
 
         nav a {
             color: var(--muted);
@@ -64,28 +58,12 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            position: relative;
         }
 
         nav a:hover,
-        nav a.active {
-            color: var(--text);
-        }
+        nav a.active { color: var(--text); }
 
-        nav a.active::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -6px;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-soft));
-        }
-
-        /* Intro */
-        .intro {
-            margin-bottom: 28px;
-        }
+        .intro { margin-bottom: 28px; }
 
         .intro h1 {
             font-family: "Cinzel", serif;
@@ -102,7 +80,6 @@
             line-height: 1.5;
         }
 
-        /* Grid */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -114,14 +91,7 @@
             border-radius: 14px;
             border: 1px solid var(--border);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .card a.thumb {
-            display: block;
-            overflow: hidden;
+            cursor: pointer;
         }
 
         .card img {
@@ -162,7 +132,60 @@
             margin-top: 8px;
         }
 
-        /* Footer */
+        /* LIGHTBOX */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+        }
+
+        /* Lightbox buttons */
+        .lb-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            padding: 10px 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+            z-index: 10000;
+        }
+
+        .lb-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .lb-prev { left: 30px; }
+        .lb-next { right: 30px; }
+
+        /* Fade animation */
+        #lightbox-img.fade-in {
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         footer {
             margin-top: 36px;
             padding-top: 18px;
@@ -175,34 +198,68 @@
             gap: 10px;
         }
 
-        footer span.highlight {
-            color: var(--accent-soft);
-        }
-
-        @media (max-width: 640px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            nav a {
-                margin-left: 0;
-                margin-right: 16px;
-            }
-
-            .intro h1 {
-                font-size: 1.5rem;
-            }
-        }
+        footer span.highlight { color: var(--accent-soft); }
     </style>
+
+    <script>
+        const images = [
+            "images/batwoman.jpeg",
+            "images/bride.jpeg",
+            "images/cartoonbat.jpeg",
+            "images/devilhead.jpeg",
+            "images/elvira.jpeg",
+            "images/heart.png",
+            "images/horror4.jpeg",
+            "images/hybridwolf.jpeg",
+            "images/ornamentalskull.jpeg",
+            "images/vampire.jpeg"
+        ];
+
+        let currentIndex = 0;
+
+        function openLightbox(src) {
+            currentIndex = images.indexOf(src);
+            const lb = document.getElementById("lightbox");
+            const img = document.getElementById("lightbox-img");
+
+            img.classList.remove("fade-in");
+            void img.offsetWidth; // restart animation
+
+            img.src = src;
+            img.classList.add("fade-in");
+            lb.classList.add("active");
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightbox").classList.remove("active");
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            openLightbox(images[currentIndex]);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            openLightbox(images[currentIndex]);
+        }
+
+        document.addEventListener("keydown", (e) => {
+            const lb = document.getElementById("lightbox");
+            if (!lb.classList.contains("active")) return;
+
+            if (e.key === "ArrowRight") nextImage();
+            if (e.key === "ArrowLeft") prevImage();
+            if (e.key === "Escape") closeLightbox();
+        });
+    </script>
 </head>
+
 <body>
 <div class="page">
+
     <header>
-        <div class="logo">
-            FAYE <span>ON</span> FLESH
-        </div>
+        <div class="logo">FAYE <span>ON</span> FLESH</div>
         <nav>
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
@@ -214,101 +271,126 @@
 
     <section class="intro">
         <h1>Portfolio</h1>
-        <p>
-            A curated selection of gothic, anatomical and horror-inspired work.  
-            Click any piece to view the full artwork in a new tab.
-        </p>
+        <p>A curated selection of gothic, anatomical and horror-inspired work. Click any piece to view it full-size.</p>
     </section>
 
     <section class="grid">
-        <!-- HEART & HAND -->
-        <article class="card">
-            <a class="thumb" href="images/heart_hand.jpeg" target="_blank">
-                <img src="images/heart_hand.jpeg" alt="Heart & Hand gothic anatomical illustration">
-            </a>
-            <div class="card-body">
-                <div class="card-title">HEART &amp; HAND</div>
-                <div class="card-meta">
-                    Gothic anatomical illustration with stitched detailing and ritual undertones.
-                </div>
-                <div class="tagline">Blackwork • Anatomy • Symbolism</div>
-            </div>
-        </article>
 
-        <!-- BAT HYBRID PORTRAIT -->
-        <article class="card">
-            <a class="thumb" href="images/bat_hybrid.jpeg" target="_blank">
-                <img src="images/bat_hybrid.jpeg" alt="Bat hybrid surreal portrait">
-            </a>
+        <!-- batwoman -->
+        <div class="card" onclick="openLightbox('images/batwoman.jpeg')">
+            <img src="images/batwoman.jpeg" alt="batwoman">
             <div class="card-body">
-                <div class="card-title">BAT HYBRID PORTRAIT</div>
-                <div class="card-meta">
-                    Surreal fusion of human portraiture and winged creature, leaning into uncanny tension.
-                </div>
-                <div class="tagline">Surrealism • Portrait • Hybrid</div>
+                <div class="card-title">BATWOMAN</div>
+                <div class="card-meta">Dark portrait with gothic stylisation.</div>
+                <div class="tagline">Portrait • Gothic</div>
             </div>
-        </article>
+        </div>
 
-        <!-- CLASSIC HORROR SET -->
-        <article class="card">
-            <a class="thumb" href="images/classic_horror_set.jpeg" target="_blank">
-                <img src="images/classic_horror_set.jpeg" alt="Classic horror set illustration">
-            </a>
+        <!-- bride -->
+        <div class="card" onclick="openLightbox('images/bride.jpeg')">
+            <img src="images/bride.jpeg" alt="bride">
             <div class="card-body">
-                <div class="card-title">CLASSIC HORROR SET</div>
-                <div class="card-meta">
-                    Four iconic horror figures rendered in bold blackwork, designed as a cohesive set.
-                </div>
-                <div class="tagline">Horror • Blackwork • Series</div>
+                <div class="card-title">BRIDE</div>
+                <div class="card-meta">Classic horror bride rendered in bold blackwork.</div>
+                <div class="tagline">Horror • Blackwork</div>
             </div>
-        </article>
+        </div>
 
-        <!-- DEVIL PORTRAIT -->
-        <article class="card">
-            <a class="thumb" href="images/devilhead.jpeg" target="_blank">
-                <img src="images/devilhead.jpeg" alt="Devil portrait with horns and scarf">
-            </a>
+        <!-- cartoonbat -->
+        <div class="card" onclick="openLightbox('images/cartoonbat.jpeg')">
+            <img src="images/cartoonbat.jpeg" alt="cartoon bat">
             <div class="card-body">
-                <div class="card-title">DEVIL PORTRAIT</div>
-                <div class="card-meta">
-                    Stylised portrait with red horns and scarf, balancing character design and tattoo-ready linework.
-                </div>
-                <div class="tagline">Character • Colour • Linework</div>
+                <div class="card-title">CARTOON BAT</div>
+                <div class="card-meta">Playful horror creature with saturated colours.</div>
+                <div class="tagline">Colour • Creature</div>
             </div>
-        </article>
+        </div>
 
-        <!-- ORNATE SKULL -->
-        <article class="card">
-            <a class="thumb" href="images/ornate_skull.jpeg" target="_blank">
-                <img src="images/ornate_skull.jpeg" alt="Ornate skull with swirling patterns">
-            </a>
+        <!-- devilhead -->
+        <div class="card" onclick="openLightbox('images/devilhead.jpeg')">
+            <img src="images/devilhead.jpeg" alt="devil head">
             <div class="card-body">
-                <div class="card-title">ORNATE SKULL</div>
-                <div class="card-meta">
-                    Monochrome skull with swirling filigree and fanged detailing, built for high-contrast tattooing.
-                </div>
-                <div class="tagline">Skull • Filigree • Monochrome</div>
+                <div class="card-title">DEVIL HEAD</div>
+                <div class="card-meta">Stylised portrait with horns and scarf.</div>
+                <div class="tagline">Character • Linework</div>
             </div>
-        </article>
+        </div>
 
-        <!-- COLOUR BAT -->
-        <article class="card">
-            <a class="thumb" href="images/colour_bat.jpeg" target="_blank">
-                <img src="images/colour_bat.jpeg" alt="Colour bat illustration with purple wings">
-            </a>
+        <!-- elvira -->
+        <div class="card" onclick="openLightbox('images/elvira.jpeg')">
+            <img src="images/elvira.jpeg" alt="elvira">
             <div class="card-body">
-                <div class="card-title">COLOUR BAT</div>
-                <div class="card-meta">
-                    Vibrant bat illustration with saturated wings and sharp teeth, exploring playful horror.
-                </div>
-                <div class="tagline">Colour • Creature • Playful Horror</div>
+                <div class="card-title">ELVIRA</div>
+                <div class="card-meta">Iconic horror queen rendered in bold blackwork.</div>
+                <div class="tagline">Horror • Iconic</div>
             </div>
-        </article>
+        </div>
+
+        <!-- heart -->
+        <div class="card" onclick="openLightbox('images/heart.png')">
+            <img src="images/heart.png" alt="heart">
+            <div class="card-body">
+                <div class="card-title">HEART</div>
+                <div class="card-meta">Anatomical heart illustration with gothic detailing.</div>
+                <div class="tagline">Anatomy • Gothic</div>
+            </div>
+        </div>
+
+        <!-- horror4 -->
+        <div class="card" onclick="openLightbox('images/horror4.jpeg')">
+            <img src="images/horror4.jpeg" alt="horror set">
+            <div class="card-body">
+                <div class="card-title">HORROR SET</div>
+                <div class="card-meta">Classic horror icons illustrated in cohesive blackwork.</div>
+                <div class="tagline">Horror • Series</div>
+            </div>
+        </div>
+
+        <!-- hybridwolf -->
+        <div class="card" onclick="openLightbox('images/hybridwolf.jpeg')">
+            <img src="images/hybridwolf.jpeg" alt="hybrid wolf">
+            <div class="card-body">
+                <div class="card-title">HYBRID WOLF</div>
+                <div class="card-meta">Surreal hybrid creature with horror undertones.</div>
+                <div class="tagline">Hybrid • Horror</div>
+            </div>
+        </div>
+
+        <!-- ornamentalskull -->
+        <div class="card" onclick="openLightbox('images/ornamentalskull.jpeg')">
+            <img src="images/ornamentalskull.jpeg" alt="ornamental skull">
+            <div class="card-body">
+                <div class="card-title">ORNAMENTAL SKULL</div>
+                <div class="card-meta">Filigree skull with high-contrast monochrome detailing.</div>
+                <div class="tagline">Skull • Monochrome</div>
+            </div>
+        </div>
+
+        <!-- vampire -->
+        <div class="card" onclick="openLightbox('images/vampire.jpeg')">
+            <img src="images/vampire.jpeg" alt="vampire">
+            <div class="card-body">
+                <div class="card-title">VAMPIRE</div>
+                <div class="card-meta">Classic vampire portrait with gothic shading.</div>
+                <div class="tagline">Portrait • Gothic</div>
+            </div>
+        </div>
+
     </section>
 
     <footer>
-        <span class="highlight">Faye On Flesh — Tattoo &amp; Illustration</span>
+        <span>Portfolio rebuilt with working lightboxes, next/previous, and animation.</span>
+        <span class="highlight">Faye On Flesh — Tattoo & Illustration</span>
     </footer>
+
 </div>
+
+<!-- LIGHTBOX ELEMENT -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <button class="lb-btn lb-prev" onclick="event.stopPropagation(); prevImage();">❮</button>
+    <img id="lightbox-img" src="">
+    <button class="lb-btn lb-next" onclick="event.stopPropagation(); nextImage();">❯</button>
+</div>
+
 </body>
 </html>
