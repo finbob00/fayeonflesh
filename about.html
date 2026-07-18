@@ -18,14 +18,20 @@
       --max-width: 1100px;
     }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #1c1c24 0, #050509 55%);
       color: var(--text-main);
-      margin: 0;
-      padding: 0;
+      overflow-x: hidden;
     }
 
+    /* Header */
     header {
       border-bottom: 1px solid var(--border-soft);
       background: rgba(5, 5, 9, 0.9);
@@ -42,6 +48,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .site-title {
@@ -53,6 +61,7 @@
 
     .nav-links {
       display: flex;
+      flex-wrap: wrap;
       gap: 1.25rem;
       font-size: 0.9rem;
       text-transform: uppercase;
@@ -82,6 +91,7 @@
       width: 100%;
     }
 
+    /* Main */
     main {
       max-width: var(--max-width);
       margin: 2.5rem auto;
@@ -89,7 +99,7 @@
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: clamp(1.8rem, 5vw, 2.2rem);
       margin-bottom: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
@@ -120,6 +130,33 @@
       color: var(--text-main);
     }
 
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 1.25rem 1.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      nav {
+        justify-content: center;
+        text-align: center;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+
+      main {
+        padding: 0 1rem;
+      }
+    }
+
+    /* Animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -128,15 +165,6 @@
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
-    }
-
-    footer {
-      border-top: 1px solid var(--border-soft);
-      padding: 1.25rem 1.5rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 3rem;
     }
   </style>
 </head>
@@ -160,49 +188,42 @@
   <h1>About</h1>
 
   <div class="section">
-    <div class="section-title">Artistic Focus</div>
+    <div class="section-title">Who I Am</div>
     <div class="section-body">
-      I am a gothic‑focused artist specialising in horror‑inspired illustration, drawing influence from classic dark cinema such as Dracula, Nosferatu, and early expressionist film. 
+      I’m Faye Thomas — an artist specialising in gothic, horror‑inspired illustration, blackwork concepts, and tattoo‑ready designs.
+      My work blends anatomical detail, dark stylisation, and expressive character design.
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Style & Approach</div>
+    <div class="section-title">Artistic Background</div>
     <div class="section-body">
-      My work blends clean linework, detailed composition, and a strong sense of atmosphere, whether created digitally or on paper. 
+      I’ve spent years developing a style rooted in contrast, texture, and narrative.  
+      My influences range from classic horror cinema to anatomical illustration and gothic visual culture.
+      I work both digitally and traditionally, always aiming for clarity, intention, and atmosphere.
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Background</div>
+    <div class="section-title">What Drives My Work</div>
     <div class="section-body">
-      Art has been a central part of my life for years, and studying it in college strengthened both my technical ability and my commitment to developing as a professional creative. 
+      I’m drawn to art that feels personal, symbolic, and emotionally charged.  
+      Whether creating portraits, creatures, or anatomical pieces, I focus on storytelling through shape, shadow, and expression.
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Professional Values</div>
+    <div class="section-title">Future Goals</div>
     <div class="section-body">
-      I approach every piece with discipline, precision, and a focus on hygiene and safety — values I intend to carry into tattooing. 
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Tattoo Apprenticeship</div>
-    <div class="section-body">
-      I am working toward a tattoo apprenticeship to bring my style to skin. I’m drawn to tattooing not only for the art form itself, but for the craft, the culture, and the responsibility of creating permanent work for clients. 
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Customer Experience</div>
-    <div class="section-body">
-      My background in customer service has taught me how to communicate clearly, work respectfully with people, and maintain a calm, professional presence. 
+      My long‑term goal is to bring my style into tattooing — combining illustration with craft, discipline, and connection.
+      I’m actively seeking apprenticeship opportunities and studio experience to grow professionally.
     </div>
   </div>
 
 </main>
 
+<footer>
+  © Faye On Flesh — Tattoo & Illustration
 </footer>
 
 </body>
